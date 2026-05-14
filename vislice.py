@@ -3,6 +3,33 @@ import requests
 import dotenv
 import os
 
+
+API_KEY = os.getenv("API_KEY")
+Navodila = "tell me random english word on B1 level and without explanation or any other text or signs (so no *) "
+def pogovor_z_llm():
+    url = "https://api.llm7.io/v1/chat/completions"
+
+    headers = {
+        "Authorization": f"Bearer {API_KEY}",
+        "Content-Type": "application/json"
+    }
+
+    data = {
+        "model": "default",
+        "messages": [
+            {"role": "user", "content":Navodila}
+        ]
+    }
+    response =requests.post(url, headers=headers, json=data)
+    #print(response.json())
+    print(response.json()["choices"][0]["message"]["content"])
+
+dotenv.load_dotenv()
+pogovor_z_llm()
+
+
+
+
 pygame.init()
 pygame.mixer.init()
 ozadje = pygame.image.load("dungeon.jpg")
